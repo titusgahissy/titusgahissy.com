@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/components/layout/Container.astro";
+import PageHeader from "@/components/layout/PageHeader.astro";
+import PageTitle from "@/components/layout/PageTitle.astro";
+import PageSubtitle from "@/components/layout/PageSubtitle.astro";
+import Album from "@/components/Album.astro";
+import { albums } from "@/data/albums";
+---
+
+<BaseLayout
+  title="Travel Photography - Titus Gahissy"
+  description="A visual journal of places visited and street moments captured around the world. Photography from Japan, Portugal, Colombia, and more."
+>
+  <Container>
+    <PageHeader>
+      <PageTitle class="xl:w-2/3">Travels and street moments</PageTitle>
+      <PageSubtitle>
+        A visual journal of places visited and moments
+        <br class="hidden md:block" />
+        that caught my eye as I move through the world.
+      </PageSubtitle>
+    </PageHeader>
+
+    <div
+      class="pt-16 flex flex-col gap-4 md:gap-12 divide-y divide-neutral-300 dark:divide-neutral-700"
+    >
+      {
+        albums.map((albumData) => (
+          <Album
+            album={albumData.album}
+            title={albumData.title}
+            description={albumData.description}
+            images={albumData.images}
+          />
+        ))
+      }
+    </div>
+  </Container>
+</BaseLayout>

@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/components/layout/Container.astro";
+import PostTitle from "@/components/layout/PostTitle.astro";
+import Article from "@/components/layout/Article.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "@/lib/date";
+import { baseUrl } from "@/lib/config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const metadata = post.data;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "@/assets/img/posts/**/*.{jpg,jpeg,png,webp}",
+  { eager: true }
+);
+
+function getImage(path: string | undefined) {
+  if (!path || path.startsWith("/")) return null;
+  const key = `/src/assets/img/${path}`;
+  return images[key]?.default;
+}
+
+const bannerImage = getImage(metadata.image);
+const isPublicImage = metadata.image?.startsWith("/");
+
+const ogImage = bannerImage
+  ? bannerImage.src
+  : isPublicImage
+    ? `${baseUrl}${metadata.image}`
+    : `${baseUrl}/og?title=${encodeURIComponent(metadata.title)}`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: metadata.title,
+  datePublished: metadata.publishedAt,
+  dateModified: metadata.publishedAt,
+  description: metadata.summary,
+  image: ogImage,
+  url: `${baseUrl}/posts/${post.slug}`,
+  author: {
+    "@type": "Person",
+    name: "Titus Gahissy",
+  },
+};
+---
+
+<BaseLayout
+  title={metadata.title}
+  description={metadata.summary}
+  image={ogImage}
+  type="article"
+  publishedAt={metadata.publishedAt}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <Container>
+    <div class="text-center pb-4">
+      <PostTitle>
+        <a
+          slot="prepend"
+          href="/posts"
+          class="flex items-center font-medium justify-center text-base md:text-lg gap-2 no-underline text-neutral-600"
+        >
+          <svg
+            class="size-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          <span>Back to all posts</span>
+        </a>
+        {metadata.title}
+      </PostTitle>
+
+      {
+        metadata.summary && (
+          <div class="mx-auto w-2/3 font-medium text-xl md:text-2xl py-2 text-neutral-600 dark:text-neutral-400">
+            {metadata.summary}
+          </div>
+        )
+      }
+
+      <div class="flex font-normal justify-center">
+        <p class="md:text-lg text-neutral-600 dark:text-neutral-400">
+          {formatDate(metadata.publishedAt)} / {metadata.category}
+        </p>
+      </div>
+    </div>
+
+    {
+      (bannerImage || isPublicImage) && (
+        <div class="container max-w-5xl mx-auto pt-4">
+          {bannerImage ? (
+            <Image
+              src={bannerImage}
+              alt={metadata.title}
+              class="w-full h-auto"
+            />
+          ) : (
+            <img
+              src={metadata.image}
+              alt={metadata.title}
+              class="w-full h-auto"
+            />
+          )}
+        </div>
+      )
+    }
+
+    <div class="container max-w-4xl mx-auto pb-16 font-medium">
+      <Article>
+        <Content />
+      </Article>
+    </div>
+  </Container>
+</BaseLayout>

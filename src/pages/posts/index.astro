@@ -1,0 +1,79 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/components/layout/Container.astro";
+import PageHeader from "@/components/layout/PageHeader.astro";
+import PageTitle from "@/components/layout/PageTitle.astro";
+import { getCollection } from "astro:content";
+import { formatDateShort } from "@/lib/date";
+import readingTime from "reading-time";
+
+const posts = await getCollection("posts");
+
+// Sort by date descending
+const sortedPosts = posts.sort(
+  (a, b) =>
+    new Date(b.data.publishedAt).getTime() -
+    new Date(a.data.publishedAt).getTime()
+);
+
+// Group by year
+const postsByYear = sortedPosts.reduce(
+  (acc, post) => {
+    const year = new Date(post.data.publishedAt).getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, typeof sortedPosts>
+);
+---
+
+<BaseLayout
+  title="Journal - Titus Gahissy"
+  description="Thoughts, insights, and reflections on technology, entrepreneurship, design, and building products. A personal journal by Titus Gahissy."
+>
+  <Container>
+    <PageHeader>
+      <PageTitle>I share,<br />therefore I exist</PageTitle>
+    </PageHeader>
+
+    {
+      Object.entries(postsByYear).map(([year, yearPosts]) => (
+        <div>
+          <div class="text-4xl md:text-6xl font-heading font-medium mb-4 xl:mb-6">
+            {year}
+          </div>
+          <div class="flex flex-col divide-y divide-neutral-300 dark:divide-neutral-700">
+            {yearPosts.map((post) => {
+              const stats = readingTime(post.body || "");
+              return (
+                <div class="py-3 md:py-4 xl:py-6 text-base md:text-lg justify-between items-center">
+                  <div class="flex items-center uppercase text-[0.6rem] md:text-xs tracking-wider gap-5 md:gap-4 font-medium">
+                    <span class="md:hidden">{post.data.category}</span>
+                    <span>{stats.text}</span>
+                  </div>
+                  <a
+                    href={`/posts/${post.slug}`}
+                    class="flex items-center justify-between hover:text-accent ease-in-out duration-300 transition-colors"
+                  >
+                    <h2 class="font-normal text-xl md:text-4xl xl:text-[2.5rem] py-0.5 xl:py-2">
+                      {post.data.title}
+                    </h2>
+                    <div class="flex items-center gap-4">
+                      <span class="hidden md:block bg-black/5 px-2 md:px-4 font-medium md:font-normal text-xs md:text-xl xl:text-2xl rounded py-1 md:py-2">
+                        {post.data.category}
+                      </span>
+                      <span class="bg-black/5 px-2 md:px-4 font-medium md:font-normal text-xs md:text-xl xl:text-2xl rounded py-1 md:py-2 uppercase">
+                        {formatDateShort(post.data.publishedAt)}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))
+    }
+  </Container>
+</BaseLayout>

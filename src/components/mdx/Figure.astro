@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "@/assets/img/**/*.{jpg,jpeg,png,webp,gif}",
+  { eager: true }
+);
+
+function getImage(path: string) {
+  // Handle paths with or without leading slash
+  const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+  const key = `/src/assets/img/${normalizedPath}`;
+  return images[key]?.default;
+}
+
+const image = getImage(src);
+---
+
+{image ? (
+  <figure class="my-8">
+    <Image
+      src={image}
+      alt={alt}
+      class="w-full h-auto rounded-lg"
+    />
+    {caption && (
+      <figcaption class="text-center text-sm text-muted-foreground mt-2">
+        {caption}
+      </figcaption>
+    )}
+  </figure>
+) : (
+  <figure class="my-8">
+    <img src={src} alt={alt} class="w-full h-auto rounded-lg" />
+    {caption && (
+      <figcaption class="text-center text-sm text-muted-foreground mt-2">
+        {caption}
+      </figcaption>
+    )}
+  </figure>
+)}

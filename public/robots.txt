@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Astro build artifacts
+Disallow: /_astro/
+
+# Sitemap location
+Sitemap: https://titusgahissy.com/sitemap.xml

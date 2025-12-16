@@ -1,0 +1,53 @@
+---
+---
+
+<div class="flex" aria-label="Toggle Theme" data-theme-toggle>
+  <button
+    id="theme-toggle"
+    class="cursor-pointer border-none"
+    aria-label="Toggle dark mode"
+  >
+    <!-- Light mode icon (shown in dark mode - click to go light) -->
+    <svg
+      class="size-5 md:size-6 hidden dark:block"
+      viewBox="0 0 24 24"
+      fill="white"
+      stroke="white"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+    <!-- Dark mode icon (shown in light mode - click to go dark) -->
+    <svg
+      class="size-5 md:size-6 block dark:hidden"
+      viewBox="0 0 24 24"
+      fill="black"
+      stroke="black"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+  </button>
+</div>
+
+<script>
+  function initThemeSwitcher() {
+    const button = document.getElementById("theme-toggle");
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const newTheme = isDark ? "light" : "dark";
+
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
+      localStorage.setItem("theme", newTheme);
+    }
+
+    button?.addEventListener("click", toggleTheme);
+  }
+
+  // Initialize on page load
+  initThemeSwitcher();
+
+  // Re-initialize after View Transitions navigation
+  document.addEventListener("astro:after-swap", initThemeSwitcher);
+</script>

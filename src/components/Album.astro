@@ -1,0 +1,136 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  album: string;
+  title: string;
+  description: string;
+  images: string;
+}
+
+const { album, title, description, images } = Astro.props;
+const imagesArray = images.split(",").map((num) => num.trim().padStart(2, "0"));
+const basePath = `/img/photography/${album}`;
+---
+
+<div class="album-container pt-4 md:pt-8" data-album={album}>
+  <button
+    type="button"
+    class="album-toggle cursor-pointer text-neutral-500 hover:text-black dark:hover:text-white flex w-full justify-between items-center ease-linear transition-all duration-300"
+  >
+    <div class="flex flex-col md:gap-2 text-left">
+      <h2 class="text-4xl md:text-7xl font-heading">{title}</h2>
+    </div>
+    <div class="-mt-2 md:-mt-5 text-muted-foreground">
+      <svg
+        class="plus-icon size-10 md:size-16"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="0.6"
+        fill="none"
+      >
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      <svg
+        class="minus-icon size-10 md:size-16 hidden"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="0.6"
+        fill="none"
+      >
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </div>
+  </button>
+  <div class="text-base font-medium md:text-2xl text-muted-foreground pb-4 md:pb-6">
+    {description}
+  </div>
+
+  <div class="album-content hidden pb-24 md:pb-32">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+      {
+        imagesArray.map((image, index) => (
+          <div
+            class={cn(
+              "album-image relative h-60 md:h-132",
+              index >= 6 ? "hidden" : ""
+            )}
+            data-index={index}
+          >
+            <img
+              src={`${basePath}/${image}.jpeg`}
+              alt={title}
+              loading="lazy"
+              class="object-cover object-center w-full h-full"
+            />
+            <div class="absolute inset-0 bg-black/10" />
+            <div class="absolute bottom-0 left-0 bg-black text-white text-xs p-1.5">
+              {image}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    {
+      imagesArray.length > 6 && (
+        <div class="flex items-center justify-center">
+          <button
+            class="load-more-btn mt-8 col-span-full text-center text-sm md:text-2xl text-muted-foreground uppercase pt-4 md:p-4 font-bold cursor-pointer hover:text-foreground transition-colors ease-linear duration-300"
+            data-total={imagesArray.length}
+          >
+            Load next images in this album
+          </button>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  function initAlbums() {
+    document.querySelectorAll(".album-container").forEach((container) => {
+      const toggle = container.querySelector(".album-toggle");
+      const content = container.querySelector(".album-content");
+      const plusIcon = container.querySelector(".plus-icon");
+      const minusIcon = container.querySelector(".minus-icon");
+      const loadMoreBtn = container.querySelector(".load-more-btn");
+      const images = container.querySelectorAll(".album-image");
+
+      let isOpen = false;
+      let visibleCount = 6;
+
+      toggle?.addEventListener("click", () => {
+        isOpen = !isOpen;
+        content?.classList.toggle("hidden", !isOpen);
+        plusIcon?.classList.toggle("hidden", isOpen);
+        minusIcon?.classList.toggle("hidden", !isOpen);
+        toggle.classList.toggle("text-black", isOpen);
+        toggle.classList.toggle("dark:text-white", isOpen);
+        toggle.classList.toggle("text-neutral-500", !isOpen);
+      });
+
+      loadMoreBtn?.addEventListener("click", () => {
+        visibleCount += 18;
+        images.forEach((img, index) => {
+          if (index < visibleCount) {
+            img.classList.remove("hidden");
+          }
+        });
+
+        const total = parseInt(
+          loadMoreBtn.getAttribute("data-total") || "0"
+        );
+        if (visibleCount >= total) {
+          loadMoreBtn.classList.add("hidden");
+        }
+      });
+    });
+  }
+
+  // Initialize on page load
+  initAlbums();
+
+  // Re-initialize after View Transitions navigation
+  document.addEventListener("astro:after-swap", initAlbums);
+</script>

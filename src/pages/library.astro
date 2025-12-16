@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/components/layout/Container.astro";
+import PageHeader from "@/components/layout/PageHeader.astro";
+import PageTitle from "@/components/layout/PageTitle.astro";
+import PageSubtitle from "@/components/layout/PageSubtitle.astro";
+import PlusIconDivider from "@/components/PlusIconDivider.astro";
+import { books } from "@/data/books";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "@/assets/img/{books,resources}/*.{jpg,jpeg,png,webp}",
+  { eager: true }
+);
+
+function getImage(path: string) {
+  const key = `/src/assets/img/${path}`;
+  return images[key]?.default;
+}
+---
+
+<BaseLayout
+  title="Library - Titus Gahissy"
+  description="A curated collection of books and resources that have influenced my thinking on business, productivity, and personal growth."
+>
+  <Container>
+    <PageHeader>
+      <PageTitle>The Library</PageTitle>
+      <PageSubtitle
+        >Sharing books and resources that stuck with me.</PageSubtitle
+      >
+    </PageHeader>
+
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 mt-4 md:mt-12 border-l border-t border-neutral-300 dark:border-neutral-700 relative"
+    >
+      <PlusIconDivider
+        class="absolute top-0 left-0 -translate-x-5 md:-translate-x-6 -translate-y-5 md:-translate-y-6"
+      />
+
+      {
+        books.map((book) => (
+          <div class="flex flex-col gap-4 border-b border-r px-4 md:px-6 py-4 md:py-8 border-neutral-300 dark:border-neutral-700">
+            <div class="relative overflow-hidden shadow-sm h-52 md:h-72 xl:h-96">
+              {getImage(book.image) && (
+                <Image
+                  src={getImage(book.image)}
+                  alt={book.title}
+                  class="object-cover object-top w-full h-full"
+                />
+              )}
+            </div>
+            <div>
+              <h2 class="font-heading font-semibold text-xl/6 md:text-[1.7rem]/8">
+                {book.title}
+              </h2>
+              <div>{book.author}</div>
+              {book.url && (
+                <a
+                  href={book.url}
+                  class="text-sm font-medium leading-relaxed text-accent"
+                >
+                  <span class="underline">
+                    {book.type === "book" ? "Get your copy" : "Visit website"}
+                  </span>
+                  <span class="text-[0.6rem] ml-0.5">&#8599;</span>
+                </a>
+              )}
+              <p class="pt-2 text-xs md:text-sm font-medium leading-relaxed">
+                {book.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</BaseLayout>

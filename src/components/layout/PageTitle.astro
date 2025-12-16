@@ -1,0 +1,16 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={cn("flex flex-col gap-4", className)}>
+  <slot name="prepend" />
+  <h1 class="text-6xl md:text-8xl font-heading font-medium">
+    <slot />
+  </h1>
+</div>
