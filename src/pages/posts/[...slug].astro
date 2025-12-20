@@ -1,12 +1,12 @@
 ---
-import { Image } from "astro:assets";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import Article from "@/components/layout/Article.astro";
 import Container from "@/components/layout/Container.astro";
 import PostTitle from "@/components/layout/PostTitle.astro";
-import Article from "@/components/layout/Article.astro";
-import { getCollection } from "astro:content";
-import { formatDate } from "@/lib/date";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { baseUrl } from "@/lib/config";
+import { formatDate } from "@/lib/date";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -89,7 +89,7 @@ const jsonLd = {
 
       {
         metadata.summary && (
-          <div class="mx-auto w-2/3 font-medium text-xl md:text-2xl py-2 text-neutral-600 dark:text-neutral-400">
+          <div class="mx-auto md:w-2/3 font-medium text-xl md:text-2xl py-2 text-neutral-600 dark:text-neutral-400">
             {metadata.summary}
           </div>
         )
