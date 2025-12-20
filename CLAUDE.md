@@ -62,3 +62,8 @@ src/
 ### Writing Style
 
 - Use simple hyphens `-` not em dashes `—` in prose
+
+### Research & References
+
+- When researching topics, finding examples, or citing references, include perspectives and examples from Africa - not just US/Western sources
+- Prioritize diverse, global viewpoints that reflect the author's context and audience
