@@ -10,7 +10,7 @@ const { class: className } = Astro.props;
 
 <div class={cn("flex flex-col gap-4", className)}>
   <slot name="prepend" />
-  <h1 class="text-7xl md:text-8xl xl:text-8xl font-heading font-medium">
+  <h1 class="text-5xl md:text-8xl xl:text-8xl font-heading font-medium">
     <slot />
   </h1>
 </div>
