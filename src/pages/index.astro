@@ -1,27 +1,49 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Container from "@/components/layout/Container.astro";
-import HeroTitle from "@/components/layout/HeroTitle.astro";
 ---
 
 <BaseLayout
   title="Titus Gahissy - Solutions Architect & Entrepreneur"
-  description="Hello, I'm Titus Gahissy. I explore not so boring ideas and challenge teams and founders to create valuable products."
+  description="I'm Titus Gahissy, a Solutions Architect and Entrepreneur helping teams and founders build valuable products."
 >
-  <Container class="pt-12 md:pt-8 xl:pt-24 space-y-3 md:space-y-4 xl:space-y-6">
-    <HeroTitle>The Product<br />Is The Model</HeroTitle>
-    <div class="text-xl md:text-4xl xl:text-5xl/13 font-normal">
-      Hello, I'm <span class="font-medium">Titus Gahissy</span>
-    </div>
-    <div class="text-lg md:text-2xl xl:text-3xl font-normal space-y-3">
-      <p>
-        I explore not so boring ideas and challenge<br />
-        teams and founders to create valuable products.
+  <Container class="pt-8 md:pt-12 xl:pt-20">
+    <div class="space-y-8 md:space-y-12">
+      <!-- Eyebrow -->
+      <p class="text-sm text-muted-foreground uppercase tracking-widest">
+        Solutions Architect & Entrepreneur
       </p>
-      <p class="text-neutral-500">
-        This is my little corner of the internet where I share<br />
-        thoughts, travel moments, books and projects.
-      </p>
+
+      <!-- Main Heading -->
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]">
+        I'm Titus Gahissy -<br class="hidden md:block" />
+        <span class="text-muted-foreground">a builder who likes<br class="hidden lg:block" /> making things happen.</span>
+      </h1>
+
+      <!-- Description -->
+      <div class="max-w-2xl space-y-6">
+        <p class="text-lg md:text-xl text-foreground/80 leading-relaxed">
+          I started as a software engineer building products and leading technical teams,
+          but now I do a mix of everything from architecture consulting to advising founders.
+          I help teams turn complex problems into elegant solutions.
+        </p>
+
+        <a
+          href="/about"
+          class="group inline-flex items-center gap-2 text-foreground font-medium hover:gap-3 transition-all duration-300"
+        >
+          <span>More about me</span>
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
     </div>
   </Container>
 </BaseLayout>

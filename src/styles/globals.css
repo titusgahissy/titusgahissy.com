@@ -12,10 +12,11 @@
   font-display: swap;
 }
 
+
 @font-face {
-  font-family: 'Feature Headline';
-  src: url('/fonts/feature/FeatureHeadline-Variable.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Clash Grotesk';
+  src: url('/fonts/clash-grotesk/variable.woff2') format('woff2');
+  font-weight: 200 700;
   font-style: normal;
   font-display: swap;
 }
@@ -30,7 +31,7 @@
 
 :root {
   --font-primary: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Feature Headline', sans-serif;
+  --font-heading: 'Clash Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-heading-alt: 'GT Walsheim Pro', sans-serif;
 
   --accent: oklch(0.51 0.2752 292.47);
