@@ -38,8 +38,10 @@ const postsByYear = sortedPosts.reduce(
     </PageHeader>
 
     {
-      Object.entries(postsByYear).map(([year, yearPosts]) => (
-        <div>
+      Object.entries(postsByYear)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearPosts]) => (
+        <div class="mb-12 md:mb-16 xl:mb-20">
           <div class="text-4xl md:text-6xl font-heading font-medium mb-4 xl:mb-6">
             {year}
           </div>
