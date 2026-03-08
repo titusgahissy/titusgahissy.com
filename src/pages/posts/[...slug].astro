@@ -5,6 +5,8 @@ import PostTitle from "@/components/layout/PostTitle.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { baseUrl } from "@/lib/config";
 import { formatDate } from "@/lib/date";
+import Figure from "@/components/mdx/Figure.astro";
+import YouTube from "@/components/mdx/YouTube.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
@@ -124,7 +126,7 @@ const jsonLd = {
 
     <div class="container max-w-4xl mx-auto pb-16 font-medium">
       <Article>
-        <Content />
+        <Content components={{ Figure, YouTube }} />
       </Article>
     </div>
   </Container>
