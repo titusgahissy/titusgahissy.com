@@ -63,6 +63,28 @@ src/
 
 - Use simple hyphens `-` not em dashes `—` in prose
 
+### Signature Structure
+
+Every post follows this arc, regardless of topic or format:
+
+1. **The Hook** - A sharp observation, personal anecdote, or uncomfortable truth. Never a thesis statement. Drop the reader into the middle of something.
+2. **The Context** - Ground the topic in something concrete and relatable. Data wrapped in analogy. This is where you earn trust.
+3. **The Tension** - Name the uncomfortable part. The thing people feel but haven't articulated. Use section titles that carry meaning, not filler transitions.
+4. **The Reframe** - The signature move. Take the concept the reader thought they understood and flip it. One sentence, usually bolded. Examples: "That's not a technical distinction. **That's a sovereignty distinction.**" / "This is not a productivity boost. **This is industrialization.**"
+5. **The Evidence** - Concrete examples mixing global and African contexts. Data points, real companies, real people. Never argue from theory alone.
+6. **The Honest Reckoning** - Pull back from optimism. Name the costs, unknowns, things that could go wrong. No filler phrases - lead with substance.
+7. **The Quiet Close** - Never a mic drop. Never triumphant. End with a question, a "maybe," or a humble reframe that puts responsibility back on the reader. Examples: "The question is what we do with it." / "I am winding the spring."
+
+### Editorial Variations
+
+**Hero's Journey (Second Person)** - used in `building-in-the-dark.mdx`
+
+Same signature structure delivered through Joseph Campbell's monomyth. Written in second person ("you") so the reader lives the journey. Key techniques:
+- Second person voice throughout ("you arrive", "you choose", "you learn")
+- Each section ends with a bold question or statement that propels to the next
+- Italic subtitle under the main title sets the emotional frame
+- Closing reframes the theme - not the hero's glory, but laying foundations for others
+
 ### Research & References
 
 - When researching topics, finding examples, or citing references, include perspectives and examples from Africa - not just US/Western sources
