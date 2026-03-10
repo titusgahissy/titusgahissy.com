@@ -110,6 +110,15 @@ const jsonLd = {
       href="/rss.xml"
     />
 
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-VG0DHQ2YKT"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VG0DHQ2YKT');
+    </script>
+
     <ViewTransitions />
 
     <!-- Theme initialization script (runs before paint to prevent flash) -->
