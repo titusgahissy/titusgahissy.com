@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 import { baseUrl } from "@/lib/config";
 
 export async function GET() {
-  const pages = ["", "/posts", "/travel", "/ventures", "/library", "/about", "/contact"];
+  const pages = ["", "/posts", "/travel", "/library", "/about", "/contact"];
   const posts = await getCollection("posts");
 
   const staticPages = pages.map(
